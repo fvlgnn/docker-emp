@@ -1,2 +1,2 @@
 # docker-emp
-stack docker, nginx, mysql, php-fpm
+stack docker, nginx, mariadb, php-fpm
