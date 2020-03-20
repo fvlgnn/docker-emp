@@ -1,13 +1,30 @@
-*.tar
-*.tar.*
-*.jar
-*.exe
-*.msi
-*.zip
-*.tgz
-*.log
-*.log.*
-*.sig
+# GIT
+.git
 
-pkg/
-src/
+# APP Files
+node_modules
+.grunt
+build/Release
+npm-debug.log
+.DS_Store
+composer.lock
+package-lock.json
+bkp
+*.bkp
+
+# Logs
+logs
+*.log
+logs.log.*
+
+# VS Code
+.vscode
+
+# IDE Files
+/nbproject/
+.idea/*
+
+# Executables
+*.exe
+*.out
+*.app
