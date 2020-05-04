@@ -58,7 +58,7 @@ RUN if [ "$XDEBUG" = "1" ] ; then pecl install xdebug-2.8.1 && docker-php-ext-en
 # ENV APP_ENV dev
 # ENV APP_DEBUG 1
 
-WORKDIR /srv/app
+WORKDIR /app
 
 # CMD ["/bin/bash","-c", "php-fpm"]
 CMD ["/bin/bash","-c","exec php-fpm","-F"]
