@@ -11,6 +11,16 @@ composer.lock
 package-lock.json
 bkp
 *.bkp
+tmp
+temp
+database/*
+!db/
+db/*
+!db/README.txt
+certs/
+*.crt
+*.key
+*.pem
 
 # Logs
 logs
@@ -28,3 +38,4 @@ logs.log.*
 *.exe
 *.out
 *.app
+

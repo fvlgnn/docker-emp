@@ -1,0 +1,71 @@
+version: "3.1"
+
+services:
+
+  php:
+    container_name: ${PROJECT_NAME}_php_${VERSION_ID}
+    build:
+      context: ./docker/php
+      args:
+        - XDEBUG=${XDEBUG}
+    ports:
+      - 9000:9000
+    networks:
+      - backend
+    volumes:
+      - ./app:/srv/app:cached
+      - ./docker/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
+    environment:
+      APP_URL: ${APP_URL}
+      TIME_ZONE: ${TIME_ZONE}
+      MYSQL_HOST: db:${MYSQL_PORT_EXPOSED}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASS: ${MYSQL_PASS}
+      MYSQL_DB: ${MYSQL_DB}
+    depends_on:
+      - db
+ 
+  web:
+    container_name: ${PROJECT_NAME}_web_${VERSION_ID}
+    build:
+      context: ./docker/nginx
+    ports:
+      - ${HTTP_PORT_EXPOSED}:80
+      # - ${HTTPS_PORT_EXPOSED}:443
+    networks:
+      - backend
+      - frontend
+    volumes:
+      - ./app:/srv/app:ro
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./logs/app:/var/log/nginx
+      # - ./docker/nginx/default.template.conf:/etc/nginx/conf.d/default.template.conf:ro
+      # - ./docker/nginx/certs:/etc/nginx/certs:ro
+    # environment:
+    #   PROJECT_NAME: ${PROJECT_NAME}
+    depends_on:
+      - php
+
+  db:
+    container_name: ${PROJECT_NAME}_db_${VERSION_ID}
+    build:
+      context: ./docker/mariadb
+    ports:
+      - ${MYSQL_PORT_EXPOSED}:3306
+    volumes:
+      - ./db:/var/lib/mysql
+      # - ./docker/mariadb/init:/docker-entrypoint-initdb.d
+      - ./logs/db:/var/log/mysql
+    networks:
+      - backend
+    environment:
+      TZ: ${TIME_ZONE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOTPASS}
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: ${MYSQL_DB}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASS}
+
+networks:
+  frontend:
+  backend:
