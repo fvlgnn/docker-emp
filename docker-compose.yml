@@ -54,7 +54,7 @@ services:
     ports:
       - ${DB_PORT_EXPOSED}:3306
     volumes:
-      - ./db:/var/lib/mysql
+      - ./db/${DB_NAME}:/var/lib/mysql/${DB_NAME}
       # - ./docker/mariadb/init:/docker-entrypoint-initdb.d
       - ./logs/db:/var/log/mysql
     networks:
