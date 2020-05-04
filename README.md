@@ -1,4 +1,4 @@
-# docker-emp-slim
+# docker-emp
 Docker environement stack with NGINX, MARIADB, PHP-FPM
 
 
