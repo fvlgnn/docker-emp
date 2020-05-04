@@ -59,8 +59,9 @@ docker-emp-slim
 │           www.conf
 │           
 └───logs
-    ├───app
-    └───db
+    ├───db
+    ├───php
+    └───web
 ```
 
 
