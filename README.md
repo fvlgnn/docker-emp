@@ -24,7 +24,7 @@ Requirement **docker-compose**
 ### Tree
 
 ```
-docker-emp-slim
+docker-emp
 │   .env
 │   .gitignore
 │   docker-compose.yml
