@@ -145,12 +145,12 @@ services:
   db:
 # ...
     volumes:
-      - db:/var/lib/mysql
+      - database:/var/lib/mysql
 # ...
 
 # add after networks
 volumes:
-  db:
+  database:
 
 ```
 
