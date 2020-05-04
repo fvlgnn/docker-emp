@@ -1,4 +1,4 @@
-# docker-amp-slim
+# docker-emp-slim
 Docker environement stack with NGINX, MARIADB, PHP-FPM
 
 
@@ -160,6 +160,25 @@ For enable DB logs edit `docker/mariadb/Dockerfile` uncomment this command
 ```
 RUN sed -i "s/#log-error/log-error/g" /etc/mysql/mysql.conf.d/mysqld.cnf
 ```
+
+---
+
+If you've a database dump you can add the `.sql` dump file in `docker\mariadb\init` and uncomment the follow row
+
+```yaml
+
+# ...
+services:
+# ...
+  db:
+# ...
+    volumes:
+      - ./docker/mariadb/init:/docker-entrypoint-initdb.d
+# ...
+
+```
+
+The database will be created at the first build
 
 ---
 
