@@ -1,5 +1,5 @@
 # docker-emp
-Docker environement stack with NGINX, MARIADB, PHP-FPM
+Docker environement stack with NGINX, MYSQL (MariaDB), PHP (FPM)
 
 
 ## Overview
