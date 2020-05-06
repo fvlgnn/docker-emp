@@ -42,7 +42,9 @@ docker-emp
 │   │   │   Dockerfile
 │   │   │   
 │   │   └───init
+|   |           000-operations.sql
 │   │           dbapp.sql
+|   |           zzz-operations.sql
 │   │           
 │   ├───nginx
 │   │   │   default.template.conf
@@ -76,6 +78,7 @@ _Edit or view this file before building the stack_
 * `PROJECT_NAME`: Name of your docker stack
 * `VERSION_ID`: ID of your project stack. (Use it only if you want try more version of your project)
 * `XDEBUG`: Using `1` if you want install xdegub module, otherwise using `0`.
+* `COMPOSER`: Using `1` if you want install php composer, otherwise using `0`.
 * `TIME_ZONE`: Time zone, using form PHP and MySQL. 
 * `APP_URL`: Url of your web app. Using for CMS/Frameweork like Wordpress, CodeIgniter, etc.
 * `HTTP_PORT_EXPOSED`: Exposed port of you're HTTP web app.
@@ -184,6 +187,26 @@ The database will be created at the first build
 
 ---
 
+If you want have extra databases edit `docker\mariadb\init\000-operations.sql` or `docker\mariadb\init\zzz-operations.sql` and uncomment the follow row, using the database name chosen instead of `optional_database`.
+
+```yaml
+
+# ...
+services:
+# ...
+  db:
+# ...
+    volumes:
+      - ./docker/mariadb/init:/docker-entrypoint-initdb.d
+      - ./db/optional_database:/var/lib/mysql/optional_database
+# ...
+
+```
+
+The operations will be make at the first build
+
+---
+
 When stack is ready visit `http://localhost`
 
 For show PHP info go to `http://localhost/info.php`
@@ -200,7 +223,9 @@ If you're on linux system you can run:
 * `make remove` - remove your stack but mantain your databases and logs
 * `make purge` -  remove your stack and delete all databases and clear logs files
 * `make validate` - validate your docker-compose.yml file if you're do any changes
-
+* `make bash-db` - enter with bash into db container 
+* `make bash-php` - enter with bash into php container 
+* `make bash-web` - enter with bash into web container 
 
 Command in nutshell for build, start, stop, remove and validate the docker stack.
 
@@ -209,5 +234,7 @@ Command in nutshell for build, start, stop, remove and validate the docker stack
 * `docker-compose start` - start your stack
 * `docker-compose stop`  - stop your stack 
 * `docker-compose down --volumes` - like _down_ but also removes volumes
-* `docker-compose config` validate your stack
+* `docker-compose config` - validate your stack
+
+* `docker-compose exec SERVICE_NAME bash` enters with bash terminal into container
 

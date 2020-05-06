@@ -1,5 +1,8 @@
 FROM php:7.3-fpm-alpine
 
+ARG XDEBUG
+ARG COMPOSER
+
 RUN apk update
 
 RUN apk add --no-cache \
@@ -38,14 +41,48 @@ RUN set -xe \
         intl \
         zip \
         gd \
-        opcache \
     && docker-php-ext-enable --ini-name 05-opcache.ini opcache
 
 COPY php.ini /usr/local/etc/php/php.ini
 
 RUN apk add --no-cache fcgi
 
-RUN if [ "$XDEBUG" = "1" ] ; then pecl install xdebug-2.8.1 && docker-php-ext-enable xdebug; else echo XDEBUG DISABLED; fi
+# INSTALL XDEBUG
+RUN if [ "$XDEBUG" = "1" ] ; then \
+    apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
+    && pecl install xdebug-2.9.5 \
+    && docker-php-ext-enable xdebug \
+    && apk del -f .build-deps \
+	&& echo XDEBUG ENABLED; \
+else \
+	echo XDEBUG DISABLED; \
+fi
+
+# INSTALL COMPOSER
+RUN if [ "$COMPOSER" = "1" ] ; then \
+    set -xe \
+    && apk add --no-cache \
+        git \
+        curl \
+        openssl \
+        libressl-dev \
+    && docker-php-ext-install \
+        phar \
+        json \
+        iconv \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && chmod +x /usr/local/bin/composer \
+    && composer --version \
+    # ### example ### install drush
+    # && composer global require drush/drush:9.* --prefer-dist \
+    # && ln -s /root/.composer/vendor/drush/drush/drush /usr/local/bin/drush \
+    # && chmod +x /usr/local/bin/drush \
+    && echo COMPOSER INSTALLED; \
+else \
+	echo COMPOSER SKIPPED; \
+fi
+
+# OTHER OPTIONS
 
 # RUN set -xe && echo "pm.status_path = /status" >> /usr/local/etc/php-fpm.d/zz-docker.conf
 
@@ -60,5 +97,4 @@ RUN if [ "$XDEBUG" = "1" ] ; then pecl install xdebug-2.8.1 && docker-php-ext-en
 
 WORKDIR /app
 
-# CMD ["/bin/bash","-c", "php-fpm"]
-CMD ["/bin/bash","-c","exec php-fpm","-F"]
+CMD ["/bin/bash","-c", "php-fpm"]

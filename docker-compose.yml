@@ -8,6 +8,7 @@ services:
       context: ./docker/php
       args:
         - XDEBUG=${XDEBUG}
+        - COMPOSER=${COMPOSER}
     ports:
       - 9000:9000
     networks:
@@ -56,6 +57,7 @@ services:
     volumes:
       - ./db/${DB_NAME}:/var/lib/mysql/${DB_NAME}
       # - ./docker/mariadb/init:/docker-entrypoint-initdb.d
+      # - ./db/optional_database:/var/lib/mysql/optional_database
       - ./logs/db:/var/log/mysql
     networks:
       - backend
