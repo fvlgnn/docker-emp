@@ -47,13 +47,10 @@ docker-emp
 |   |           zzz-operations.sql
 │   │           
 │   ├───nginx
-│   │   │   default.template.conf
+│   │   │   default.template
 │   │   │   Dockerfile
 │   │   │   
-│   │   ├───certs
-│   │   │       
-│   │   └───conf.d
-│   │           default.conf
+│   │   └───certs
 │   │           
 │   └───php
 │           Dockerfile
@@ -83,6 +80,7 @@ _Edit or view this file before building the stack_
 * `APP_URL`: Url of your web app. Using for CMS/Frameweork like Wordpress, CodeIgniter, etc.
 * `HTTP_PORT_EXPOSED`: Exposed port of you're HTTP web app.
 * `HTTPS_PORT_EXPOSED`: Exposed port of you're HTTPS SSL web app. Required certificates.
+* `SERVER_HOST_NAME`: The server name. For security reasons it's preferable to use the DNS name (without http/https) or the host name. (ex. localhost | domain.dom | www.domain.dom | sub.domain.dom | my-laptop).  
 * `DB_PORT_EXPOSED`: Used only if you want connetc to database with external client. It's port number used for connetcting with external client like _HeidiSQL_ or _MySQL Workbench_ to create database and tables. Configure external client connetction using _host_ `127.0.0.1`, _username_ `root` whereas _password_ your `DB_ROOTPASS` and _port_ your `DB_PORT_EXPOSED` as in environment file.
 * `DB_ROOTPASS`: MySQL root password. It's not safe use this method in production but for development it's acceptable.
 * `DB_USER`: User name for connetion database from your webapp.
@@ -152,7 +150,7 @@ services:
       - database:/var/lib/mysql
 # ...
 
-# add after networks
+# add after services
 volumes:
   database:
 

@@ -11,8 +11,6 @@ services:
         - COMPOSER=${COMPOSER}
     ports:
       - 9000:9000
-    networks:
-      - backend
     volumes:
       - ./app:/app:cached
       - ./docker/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
@@ -33,18 +31,16 @@ services:
       context: ./docker/nginx
     ports:
       - ${HTTP_PORT_EXPOSED}:80
-      # - ${HTTPS_PORT_EXPOSED}:443
-    networks:
-      - backend
-      - frontend
+      - ${HTTPS_PORT_EXPOSED}:443
     volumes:
       - ./app:/app:ro
-      - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
       - ./logs/web:/var/log/nginx
-      # - ./docker/nginx/default.template.conf:/etc/nginx/conf.d/default.template.conf:ro
-      # - ./docker/nginx/certs:/etc/nginx/certs:ro
-    # environment:
-    #   PROJECT_NAME: ${PROJECT_NAME}
+      - ./docker/nginx/default.template:/etc/nginx/conf.d/default.template
+      - ./docker/nginx/certs:/etc/nginx/certs:ro
+    environment:
+      HTTP_PORT_EXPOSED: ${HTTP_PORT_EXPOSED}
+      HTTPS_PORT_EXPOSED: ${HTTPS_PORT_EXPOSED}
+      SERVER_HOST_NAME: ${SERVER_HOST_NAME}
     depends_on:
       - php
 
@@ -58,8 +54,6 @@ services:
       - ./db:/var/lib/mysql
       # - ./docker/mariadb/init:/docker-entrypoint-initdb.d
       - ./logs/db:/var/log/mysql
-    networks:
-      - backend
     environment:
       TZ: ${TIME_ZONE}
       MYSQL_ROOT_PASSWORD: ${DB_ROOTPASS}
@@ -67,7 +61,3 @@ services:
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASS}
-
-networks:
-  frontend:
-  backend:

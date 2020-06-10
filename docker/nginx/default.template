@@ -1,18 +1,18 @@
 # Nginx configuration
 
 server {
-    listen 80;
-    listen [::]:80;
+    listen ${HTTP_PORT_EXPOSED};
+    listen [::]:${HTTP_PORT_EXPOSED};
 
-    # server_name ${PROJECT_NAME};
-    server_name nginx;
+    server_name ${SERVER_HOST_NAME};
 
     # hide server info
     # server_tokens off;
 
-    root /app;
-
     index index.php index.html;
+    error_log  /var/log/nginx/error.log;
+    access_log /var/log/nginx/access.log;
+    root /app;
 
     # redirect http to https
     # location / {
@@ -27,21 +27,15 @@ server {
         include fastcgi_params;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         fastcgi_param PATH_INFO $fastcgi_path_info;
-		# app environments
-		#fastcgi_param THE_APPLICATION_ENV  the_variabile;
-		#fastcgi_param CI_ENV  production;
     }
-
-    error_log  /var/log/nginx/error.log;
-    # access_log /var/log/nginx/access.log;
 
 }
 
 # server {
-#     listen 443 ssl;
-#     listen [::]:443 ssl;
+#     listen ${HTTPS_PORT_EXPOSED} ssl;
+#     listen [::]:${HTTPS_PORT_EXPOSED} ssl;
 
-#     server_name nginx;
+#     server_name ${SERVER_HOST_NAME};
 
 #     server_tokens off;
 
