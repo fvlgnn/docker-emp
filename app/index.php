@@ -1,6 +1,6 @@
 <?php
  
-var_dump("Hi, you're on ".getenv('APP_URL'));
+var_dump("Hi, you're on ".getenv('WEBAPP_URL'));
  
 $dbhost = getenv('DB_HOST');
 $dbuser = getenv('DB_USER');

@@ -32,7 +32,7 @@ docker-emp
 │   Makefile
 │   README.md
 │   
-├───app
+├───src
 │       index.php
 │       info.php
 │       
@@ -77,7 +77,7 @@ _Edit or view this file before building the stack_
 * `XDEBUG`: Using `1` if you want install xdegub module, otherwise using `0`.
 * `COMPOSER`: Using `1` if you want install php composer, otherwise using `0`.
 * `TIME_ZONE`: Time zone, using form PHP and MySQL. 
-* `APP_URL`: Url of your web app. Using for CMS/Frameweork like Wordpress, CodeIgniter, etc.
+* `WEBAPP_URL`: Url of your web app. Using for CMS/Frameweork like Wordpress, CodeIgniter, etc.
 * `HTTP_PORT_EXPOSED`: Exposed port of you're HTTP web app.
 * `HTTPS_PORT_EXPOSED`: Exposed port of you're HTTPS SSL web app. Required certificates.
 * `SERVER_HOST_NAME`: The server name. For security reasons it's preferable to use the DNS name (without http/https) or the host name. (ex. localhost | domain.dom | www.domain.dom | sub.domain.dom | my-laptop).  
@@ -90,7 +90,7 @@ _Edit or view this file before building the stack_
 
 ### Workspace
 
-#### Webapp foleder: `app`
+#### Webapp foleder: `src`
 
 This is you WebApp folder. Put here your PHP project (CMS/Framework/Sources).
 

@@ -12,11 +12,11 @@ services:
     ports:
       - 9000:9000
     volumes:
-      - ./app:/app:cached
+      - ./src:/src:cached
       - ./docker/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
       - ./logs/php:/usr/local/etc/php/logs
     environment:
-      APP_URL: ${APP_URL}
+      WEBAPP_URL: ${WEBAPP_URL}
       TIME_ZONE: ${TIME_ZONE}
       DB_HOST: db:${DB_PORT_EXPOSED}
       DB_USER: ${DB_USER}
@@ -33,7 +33,7 @@ services:
       - ${HTTP_PORT_EXPOSED}:80
       - ${HTTPS_PORT_EXPOSED}:443
     volumes:
-      - ./app:/app:ro
+      - ./src:/src:ro
       - ./logs/web:/var/log/nginx
       - ./docker/nginx/default.template:/etc/nginx/conf.d/default.template
       - ./docker/nginx/certs:/etc/nginx/certs:ro

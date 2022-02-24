@@ -95,6 +95,6 @@ fi
 # ENV APP_ENV dev
 # ENV APP_DEBUG 1
 
-WORKDIR /app
+WORKDIR /src
 
 CMD ["/bin/bash","-c", "php-fpm"]
