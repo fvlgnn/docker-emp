@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Versione server:              10.1.31-MariaDB - mariadb.org binary distribution
+-- Versione server:              10.3.31-MariaDB - mariadb.org binary distribution
 -- S.O. server:                  Win32
 -- HeidiSQL Versione:            10.2.0.5599
 -- --------------------------------------------------------

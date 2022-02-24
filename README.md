@@ -9,16 +9,16 @@ Requirement **docker-compose**
 
 ### Stack Setup
 
-* Nginx version: 1.17
+* Nginx version: 1.14
 * PHP version: 7.3
-* MariaDB version: 10.1
+* MariaDB version: 10.3
 
 
 ### Docker Images
 
-* nginx:1.17.8-alpine
+* nginx:1.14.2-alpine
 * php:7.3-fpm-alpine
-* mariadb:10.1
+* mariadb:10.3
 
 
 ### Tree
